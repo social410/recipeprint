@@ -1,0 +1,23 @@
+version: "3"
+services:
+  frontend:
+    build: ./client
+    image: iamstarcode/team-boot-frontend
+    networks:
+      - app-network
+  backend:
+    build: ./server
+    image: iamstarcode/team-boot-backend
+    networks:
+      - app-network
+  web-proxy:
+    image: nginx:alpine
+    container_name: web-proxy
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    networks:
+      - app-network
+networks:
+  app-network:
